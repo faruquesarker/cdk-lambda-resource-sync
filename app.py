@@ -22,7 +22,7 @@ class LambdaResourceSyncStack(Stack):
         )
 
         # Add iam policy document
-        policy_document = """{
+        policy_document = {
                             "Version": "2012-10-17",
                             "Statement": [{
                                 "Sid": "Statement-01",
@@ -36,29 +36,14 @@ class LambdaResourceSyncStack(Stack):
                                            "logs:PutLogEvents"
                                            ],
                                 "Resource": "*"
-                            }, {
-                                "Sid": "Statement-02",
-                                "Effect": "Allow",
-                                "Action": ["dynamodb:BatchGetItem",
-                                            "dynamodb:GetItem",
-                                            "dynamodb:Query",
-                                            "dynamodb:Scan",
-                                            "dynamodb:BatchWriteItem",
-                                            "dynamodb:PutItem",
-                                            "dynamodb:UpdateItem",
-                                            "dynamodb:DescribeTable",
-                                            "dynamodb:CreateTable",
-                                            "dynamodb:DeleteTable",
-                                            ],
-                                "Resource": cost_opt_table
                             }
                             ]
-                        }"""
+                        }
 
         custom_policy_document = _iam.PolicyDocument.from_json(policy_document)
 
         # Pass this document as an initial document to a ManagedPolicy
-        managed_policy = _iam.ManagedPolicy(self, "ResSyncManagedPolicy",
+        managed_policy = _iam.Policy(self, "LambdaResSyncManagedPolicy",
             document=custom_policy_document
         )
 
