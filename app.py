@@ -24,7 +24,7 @@ class LambdaResourceSyncStack(Stack):
 
         # Add iam policy
         policy_statement = _iam.PolicyStatement( 
-                                principals=[_iam.AnyPrincipal()],
+                                principals=[_iam.ServicePrincipal('lambda.amazonaws.com')],
                                 actions=["ec2:Describe*",
                                         "tag:GetResources",
                                         "tag:GetTagValues",
@@ -44,9 +44,6 @@ class LambdaResourceSyncStack(Stack):
                                 )
         lambda_role.add_to_policy(policy_statement)
         
-        # log group
-
-
         # create lambda function
         function = _lambda.Function(self, "lambda_function",
                                     runtime=_lambda.Runtime.PYTHON_3_7,
