@@ -48,6 +48,7 @@ class LambdaResourceSyncStack(Stack):
                                     runtime=_lambda.Runtime.PYTHON_3_7,
                                     handler="lambda_function.lambda_handler",
                                     code=_lambda.Code.from_asset("./lambda/rgta-sync"),
+                                    timeout= 900,
                                     role=lambda_role,
                                     log_retention=_logs.RetentionDays.ONE_DAY,
                                     environment = { 
