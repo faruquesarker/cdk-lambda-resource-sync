@@ -24,13 +24,13 @@ def lambda_handler(event, context):
     
     
     #Drop and re-create DynamoDB table
-    table = dynamodb.recreate_table(dynamodb_client, COST_REPORT_DDB_TABLE_NAME)
+    # table = dynamodb.recreate_table(dynamodb_client, COST_REPORT_DDB_TABLE_NAME)
 
-    if not table:
-        return {
-        'statusCode': 404,
-        'body': json.dumps('Failed to re-create DynamoDB table!')
-    }
+    # if not table:
+    #     return {
+    #     'statusCode': 404,
+    #     'body': json.dumps('Failed to re-create DynamoDB table!')
+    # }
 
     # Update DynamoDB Table
     for res_env in res_envs:
