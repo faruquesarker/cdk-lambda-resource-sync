@@ -51,7 +51,7 @@ class LambdaResourceSyncStack(Stack):
                                     role=lambda_role,
                                     log_retention=_logs.RetentionDays.ONE_DAY,
                                     environment = { 
-                                        COST_REPORT_DDB_TABLE_NAME : cost_opt_table.table_name
+                                        "COST_REPORT_DDB_TABLE_NAME" : cost_opt_table.table_name
                                     }
                                     )
         cost_opt_table.grant_full_access(lambda_function)
