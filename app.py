@@ -2,6 +2,7 @@ from aws_cdk import (
     aws_lambda as _lambda,
     aws_iam as _iam,
     aws_dynamodb as _dynamodb,
+    aws_logs as _logs,
     App, Stack
 )
 
@@ -61,6 +62,7 @@ class LambdaResourceSyncStack(Stack):
                                     handler="lambda_function.lambda_handler",
                                     code=_lambda.Code.from_asset("./lambda/rgta-sync"),
                                     role=lambda_role,
+                                    log_retention=_logs.RetentionDays.ONE_DAY,
                                     environment = { 
                                         COST_REPORT_DDB_TABLE_NAME : cost_opt_table.table_name
                                     }
