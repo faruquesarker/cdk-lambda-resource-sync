@@ -24,7 +24,6 @@ class LambdaResourceSyncStack(Stack):
 
         # Add iam policy
         policy_statement = _iam.PolicyStatement( 
-                                principals=[_iam.ServicePrincipal('lambda.amazonaws.com')],
                                 actions=["ec2:Describe*",
                                         "tag:GetResources",
                                         "tag:GetTagValues",
