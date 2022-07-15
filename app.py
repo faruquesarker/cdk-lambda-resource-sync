@@ -4,6 +4,7 @@ from aws_cdk import (
     aws_iam as _iam,
     aws_dynamodb as _dynamodb,
     aws_logs as _logs,
+    core as _core,
     App, Stack
 )
 
@@ -49,7 +50,7 @@ class LambdaResourceSyncStack(Stack):
                                     runtime=_lambda.Runtime.PYTHON_3_7,
                                     handler="lambda_function.lambda_handler",
                                     code=_lambda.Code.from_asset("./lambda/rgta-sync"),
-                                    timeout= core.Duration.seconds(900),
+                                    timeout= _core.Duration.seconds(900),
                                     role=lambda_role,
                                     log_retention=_logs.RetentionDays.ONE_DAY,
                                     environment = { 
