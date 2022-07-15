@@ -54,6 +54,7 @@ class LambdaResourceSyncStack(Stack):
                                         COST_REPORT_DDB_TABLE_NAME : cost_opt_table.table_name
                                     }
                                     )
+        cost_opt_table.grant_full_access(cost_opt_table)
 
 
 app = App()
