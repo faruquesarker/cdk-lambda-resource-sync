@@ -22,23 +22,23 @@ def lambda_handler(event, context):
     res_envs = rgta.get_tag_values(rgta_client)
     LOG.info("Resource envs: " + json.dumps(res_envs))
     
-    if False:
-        #Drop and re-create DynamoDB table
-        table = dynamodb.recreate_table(dynamodb_client, COST_REPORT_DDB_TABLE_NAME)
+    
+    #Drop and re-create DynamoDB table
+    table = dynamodb.recreate_table(dynamodb_client, COST_REPORT_DDB_TABLE_NAME)
 
-        if not table:
-            return {
-            'statusCode': 404,
-            'body': json.dumps('Failed to re-create DynamoDB table!')
-        }
+    if not table:
+        return {
+        'statusCode': 404,
+        'body': json.dumps('Failed to re-create DynamoDB table!')
+    }
 
-        # Update DynamoDB Table
-        for res_env in res_envs:
-            resources = rgta.get_resources(rgta_client, res_env)
-            LOG.info("Resources: " + json.dumps(resources))
-            added_to_table = dynamodb.add_res_env(dynamodb_client, ec2_client, res_env, resources, COST_REPORT_DDB_TABLE_NAME)
-            if added_to_table:
-                LOG.info("MS360 Env : " + res_env + " sync'd to DynamoDB table: " + str(len(resources)))
+    # Update DynamoDB Table
+    for res_env in res_envs:
+        resources = rgta.get_resources(rgta_client, res_env)
+        LOG.info("Resources: " + json.dumps(resources))
+        added_to_table = dynamodb.add_res_env(dynamodb_client, ec2_client, res_env, resources, COST_REPORT_DDB_TABLE_NAME)
+        if added_to_table:
+            LOG.info("MS360 Env : " + res_env + " sync'd to DynamoDB table: " + str(len(resources)))
     return {
         'statusCode': 200,
         'body': json.dumps('Success running Lambda RGTA Sync To DynamoDB!')
