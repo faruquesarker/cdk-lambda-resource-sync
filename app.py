@@ -30,6 +30,7 @@ class LambdaResourceSyncStack(Stack):
                                 "Effect": "Allow",
                                 "Action": ["ec2:Describe*",
                                            "tag:GetResources",
+                                           "tag:GetTagValues",
                                            "cloudformation:ListStackResources",
                                            "cloudformation:DescribeStacks",
                                            "logs:CreateLogGroup",
@@ -55,6 +56,8 @@ class LambdaResourceSyncStack(Stack):
                                 managed_policies=[managed_policy,]
                                 )
         
+        # log group
+
 
         # create lambda function
         function = _lambda.Function(self, "lambda_function",
