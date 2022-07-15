@@ -22,39 +22,27 @@ class LambdaResourceSyncStack(Stack):
             sort_key=_dynamodb.Attribute(name=SORT_KEY, type=_dynamodb.AttributeType.STRING)
         )
 
-        # Add iam policy document
-        policy_document = {
-                            "Version": "2012-10-17",
-                            "Statement": [{
-                                "Sid": "Statement-01",
-                                "Effect": "Allow",
-                                "Action": ["ec2:Describe*",
-                                           "tag:GetResources",
-                                           "tag:GetTagValues",
-                                           "cloudformation:ListStackResources",
-                                           "cloudformation:DescribeStacks",
-                                           "logs:CreateLogGroup",
-                                           "logs:CreateLogStream",
-                                           "logs:PutLogEvents"
-                                           ],
-                                "Resource": "*"
-                            }
-                            ]
-                        }
-
-        custom_policy_document = _iam.PolicyDocument.from_json(policy_document)
-
-        # Pass this document as an initial document to a ManagedPolicy
-        managed_policy = _iam.Policy(self, "LambdaResSyncManagedPolicy",
-            document=custom_policy_document
-        )
+        # Add iam policy
+        policy_statement = _iam.PolicyStatement( 
+                                principals=[iam.AnyPrincipal()],
+                                actions=["ec2:Describe*",
+                                        "tag:GetResources",
+                                        "tag:GetTagValues",
+                                        "cloudformation:ListStackResources",
+                                        "cloudformation:DescribeStacks",
+                                        "logs:CreateLogGroup",
+                                        "logs:CreateLogStream",
+                                        "logs:PutLogEvents"
+                                        ],
+                                resources=["*"]
+                            )
 
         #Create role with the correct iam policy
         lambda_role = _iam.Role(scope=self, id='res-sync-lambda-exec-role',
                                 assumed_by =_iam.ServicePrincipal('lambda.amazonaws.com'),
                                 role_name='res-sync-lambda-exec-role'
                                 )
-        lambda_role.add_to_policy(managed_policy)
+        lambda_role.add_to_policy(policy_statement)
         
         # log group
 
