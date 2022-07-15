@@ -44,7 +44,7 @@ class LambdaResourceSyncStack(Stack):
         lambda_role.add_to_policy(policy_statement)
         
         # create lambda function
-        function = _lambda.Function(self, "lambda_function",
+        lambda_function = _lambda.Function(self, "lambda_function",
                                     runtime=_lambda.Runtime.PYTHON_3_7,
                                     handler="lambda_function.lambda_handler",
                                     code=_lambda.Code.from_asset("./lambda/rgta-sync"),
@@ -54,7 +54,7 @@ class LambdaResourceSyncStack(Stack):
                                         COST_REPORT_DDB_TABLE_NAME : cost_opt_table.table_name
                                     }
                                     )
-        cost_opt_table.grant_full_access(cost_opt_table)
+        cost_opt_table.grant_full_access(lambda_function)
 
 
 app = App()
