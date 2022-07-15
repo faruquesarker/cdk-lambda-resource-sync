@@ -1,3 +1,4 @@
+from distutils import core
 from aws_cdk import (
     aws_lambda as _lambda,
     aws_iam as _iam,
@@ -48,7 +49,7 @@ class LambdaResourceSyncStack(Stack):
                                     runtime=_lambda.Runtime.PYTHON_3_7,
                                     handler="lambda_function.lambda_handler",
                                     code=_lambda.Code.from_asset("./lambda/rgta-sync"),
-                                    timeout= _lambda.Duration.seconds(900),
+                                    timeout= core.Duration.seconds(900),
                                     role=lambda_role,
                                     log_retention=_logs.RetentionDays.ONE_DAY,
                                     environment = { 
