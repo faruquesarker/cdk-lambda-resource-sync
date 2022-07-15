@@ -62,7 +62,7 @@ class LambdaResourceSyncStack(Stack):
                                     code=_lambda.Code.from_asset("./lambda/rgta-sync"),
                                     role=lambda_role,
                                     environment = { 
-                                        COST_REPORT_DDB_TABLE_NAME : cost_opt_table
+                                        COST_REPORT_DDB_TABLE_NAME : cost_opt_table.table_name
                                     }
                                     )
 
