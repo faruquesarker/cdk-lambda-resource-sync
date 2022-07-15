@@ -52,9 +52,9 @@ class LambdaResourceSyncStack(Stack):
         #Create role with the correct iam policy
         lambda_role = _iam.Role(scope=self, id='res-sync-lambda-exec-role',
                                 assumed_by =_iam.ServicePrincipal('lambda.amazonaws.com'),
-                                role_name='res-sync-lambda-exec-role',
-                                managed_policies=[managed_policy,]
+                                role_name='res-sync-lambda-exec-role'
                                 )
+        lambda_role.add_to_policy(managed_policy)
         
         # log group
 
