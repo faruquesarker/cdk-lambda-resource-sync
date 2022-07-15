@@ -58,7 +58,7 @@ class LambdaResourceSyncStack(Stack):
         custom_policy_document = _iam.PolicyDocument.from_json(policy_document)
 
         # Pass this document as an initial document to a ManagedPolicy
-        new_managed_policy = _iam.ManagedPolicy(self, "ResSyncManagedPolicy",
+        managed_policy = _iam.ManagedPolicy(self, "ResSyncManagedPolicy",
             document=custom_policy_document
         )
 
@@ -66,7 +66,7 @@ class LambdaResourceSyncStack(Stack):
         lambda_role = _iam.Role(scope=self, id='res-sync-lambda-exec-role',
                                 assumed_by =_iam.ServicePrincipal('lambda.amazonaws.com'),
                                 role_name='res-sync-lambda-exec-role',
-                                managed_policies=[new_managed_policy,]
+                                managed_policies=[managed_policy,]
                                 )
         
 
