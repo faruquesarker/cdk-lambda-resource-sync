@@ -74,7 +74,7 @@ class LambdaResourceSyncStack(Stack):
         function = _lambda.Function(self, "lambda_function",
                                     runtime=_lambda.Runtime.PYTHON_3_7,
                                     handler="lambda_function.lambda_handler",
-                                    code=_lambda.Code.from_asset("lambda"),
+                                    code=_lambda.Code.from_asset("./lambda/rgta-sync"),
                                     role=lambda_role,
                                     environment = { 
                                         COST_REPORT_DDB_TABLE_NAME : cost_opt_table
