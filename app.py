@@ -22,7 +22,7 @@ class LambdaResourceSyncStack(Stack):
         )
 
         # Add iam policy document
-        policy_document = {
+        policy_document = """{
                             "Version": "2012-10-17",
                             "Statement": [{
                                 "Sid": "Statement-01",
@@ -53,7 +53,7 @@ class LambdaResourceSyncStack(Stack):
                                 "Resource": cost_opt_table
                             }
                             ]
-                        }
+                        }"""
 
         custom_policy_document = _iam.PolicyDocument.from_json(policy_document)
 
